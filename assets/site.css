@@ -54,6 +54,7 @@ p+p{margin-top:14px}
 .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap;font-size:17px;font-weight:650;letter-spacing:-.03em}
 .brand-symbol{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1.5px solid var(--green);border-radius:50%;font-size:20px;line-height:1;color:var(--green);font-weight:500;background:var(--white)}
+.brand-mark{width:28px;height:28px;object-fit:cover;border-radius:50%;border:1px solid var(--line)}
 .brand small{font-size:10px;letter-spacing:.16em;font-weight:600;color:var(--muted);margin-left:2px}
 .nav-links{display:flex;gap:22px;align-items:center}
 .nav-links>a:not(.btn){font-size:14px;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
@@ -183,7 +184,7 @@ p+p{margin-top:14px}
 .faq-list details p{font-size:15px;line-height:1.75;color:var(--muted);padding:0 28px 18px 0}
 .faq-list details a{text-underline-offset:3px}
 
-.apply-section{padding-bottom:64px}
+.apply-section{padding-bottom:64px;scroll-margin-top:88px}
 .apply-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:48px;align-items:start}
 .apply-aside{position:sticky;top:110px}
 .apply-aside h2{margin:12px 0 16px}
