@@ -285,7 +285,7 @@ def application(environ, start_response):
                 encoded = json.dumps(config).replace('<', '\\u003c')
                 html = re.sub(r'(<script id="site-config" type="application/json">).*?(</script>)',
                               lambda m: m[1] + encoded + m[2], html, count=1, flags=re.S)
-                if not LIVE_PAYMENTS:
+                if stripe_configured() and not LIVE_PAYMENTS:
                     html = html.replace("document.getElementById('preview-bar').hidden=true;", "document.getElementById('preview-bar').textContent='TEST CHECKOUT — not a live application. Use test details only.';")
                     html = html.replace("document.getElementById('robots-meta').content='index,follow';", "document.getElementById('robots-meta').content='noindex,nofollow';")
             return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')
