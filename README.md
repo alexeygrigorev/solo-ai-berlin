@@ -8,7 +8,7 @@ A small, application-based peer group in Berlin for solopreneurs and indie hacke
 | --- | --- |
 | Place | Mitte / Prenzlauer Berg (venue confirmed by 3 November) |
 | Size | 10–12 paying participants, plus the host |
-| Price | €59 total, one-time, via Stripe |
+| Price | €59 + 19% VAT (€70.21 at checkout), one-time, via Stripe |
 | Deadline | Applications and payment by 1 November 2026, 23:59 CET |
 
 Payment is an advance. It does not guarantee a place. Full refund if declined, the group is full, the threshold is missed, or the organiser cancels.
@@ -36,7 +36,7 @@ The live site already exposes:
 
 Until a Payment Link is configured, the public pages stay up and checkout returns a clear “not connected yet” error.
 
-1. In Stripe, create a **Payment Link** for **EUR 59.00**, quantity 1, no subscription, no extra tax on top of €59.
+1. In Stripe, create a **Payment Link** for **EUR 59.00 net**, quantity 1, no subscription. Turn on tax so **19% German VAT is added on top** (€70.21 charged). Do not include VAT in the €59.
 2. Success URL: `https://aiberlin.dtcdev.click/?checkout=returned`
 3. Webhook endpoint: `https://aiberlin.dtcdev.click/api/stripe-webhook` for the three events above.
 4. Store these as SSM SecureString parameters in `eu-west-1`, then redeploy:

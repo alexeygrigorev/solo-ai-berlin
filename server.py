@@ -40,7 +40,9 @@ PAYMENT_LINK_ID = os.getenv('STRIPE_PAYMENT_LINK_ID', '')
 WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', '')
 LIVE_PAYMENTS = os.getenv('STRIPE_LIVEMODE', 'false').lower() == 'true'
 CLOSES = datetime.fromisoformat('2026-11-01T23:59:00+01:00').timestamp()
-TERMS_VERSION = 'founding-pilot-2026-09-19-v1'
+TERMS_VERSION = 'founding-pilot-2026-09-19-v2'
+PRICE_NET_CENTS = 5900
+PRICE_GROSS_CENTS = 7021  # €59.00 net + 19% German VAT = €70.21
 STATIC_TYPES = {
     '.css': 'text/css; charset=utf-8',
     '.svg': 'image/svg+xml',
@@ -238,7 +240,9 @@ def handle_webhook(environ: dict) -> dict:
     row = store.get_application(reference) if isinstance(reference, str) else None
     application_id = row['id'] if row else None
     amount, currency = session.get('amount_total'), session.get('currency')
-    valid_price = amount == 5900 and currency == 'eur'
+    subtotal = session.get('amount_subtotal')
+    net_ok = subtotal == PRICE_NET_CENTS or (subtotal is None and amount == PRICE_GROSS_CENTS)
+    valid_price = currency == 'eur' and net_ok and amount == PRICE_GROSS_CENTS
     paid = session.get('payment_status') == 'paid'
     status = 'paid' if paid and valid_price and application_id else 'needs_review'
     if not paid and application_id and valid_price:

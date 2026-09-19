@@ -30,7 +30,7 @@ class BackendTests(unittest.TestCase):
     def save(self):
         status,result=self.req('/api/applications',self.payload());self.assertEqual(status,200);return result['applicationId']
     def event(self,app_id,event_id='evt_one',session='cs_test_one',paid=True):
-        return {'id':event_id,'type':'checkout.session.completed','livemode':False,'created':int(time.time()),'data':{'object':{'id':session,'client_reference_id':app_id,'payment_link':server.PAYMENT_LINK_ID,'amount_total':5900,'currency':'eur','payment_status':'paid' if paid else 'unpaid','payment_intent':'pi_example'}}}
+        return {'id':event_id,'type':'checkout.session.completed','livemode':False,'created':int(time.time()),'data':{'object':{'id':session,'client_reference_id':app_id,'payment_link':server.PAYMENT_LINK_ID,'amount_subtotal':5900,'amount_total':7021,'total_details':{'amount_tax':1121},'currency':'eur','payment_status':'paid' if paid else 'unpaid','payment_intent':'pi_example'}}}
     def post_event(self,event,secret=None,timestamp=None):
         raw=json.dumps(event).encode();stamp=str(timestamp or int(time.time()))
         sig=hmac.new((secret or server.WEBHOOK_SECRET).encode(),stamp.encode()+b'.'+raw,hashlib.sha256).hexdigest()
@@ -60,6 +60,10 @@ class BackendTests(unittest.TestCase):
         self.assertEqual(self.post_event(event,timestamp=int(time.time())-600)[0],400)
     def test_wrong_amount_not_marked_paid(self):
         event=self.event(self.save());event['data']['object']['amount_total']=1;self.post_event(event)
+        with server.connect() as con:self.assertEqual(con.execute('SELECT payment_status FROM payments').fetchone()[0],'needs_review')
+    def test_net_without_vat_not_marked_paid(self):
+        event=self.event(self.save());event['data']['object']['amount_total']=5900;event['data']['object']['total_details']={'amount_tax':0}
+        self.post_event(event)
         with server.connect() as con:self.assertEqual(con.execute('SELECT payment_status FROM payments').fetchone()[0],'needs_review')
     def test_delayed_unpaid_event_does_not_unpay(self):
         ref=self.save();self.post_event(self.event(ref));self.post_event(self.event(ref,event_id='evt_two',paid=False))
