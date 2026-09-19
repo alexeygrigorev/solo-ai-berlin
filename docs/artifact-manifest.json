@@ -1,0 +1,175 @@
+{
+  "archived_on": "2026-09-19",
+  "original_archive_crc_check": "passed",
+  "source_html_identical_to_standalone_attachment": true,
+  "items": [
+    {
+      "path": "landing/.env.example",
+      "bytes": 789,
+      "sha256": "281bcec553be6386e3fbc5fd5925e1572df6d85c64c76283e138e9fe7c04084a",
+      "git_blob_sha": "1c3fd48d226552b7dcf4d0895434695ed6f07a24",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/.gitignore",
+      "bytes": 58,
+      "sha256": "da98e8394120deab6f8529a682df2f45b56c6607165e5916ea6d1d0e7ca3571e",
+      "git_blob_sha": "96c1de5341864a3192880ccfd921c7e4ae63ed8d",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/README_RU.md",
+      "bytes": 17785,
+      "sha256": "feef0ec4eecc5513a90bf491abeed901c9274e371df1773c75d95b7ee2b7b294",
+      "git_blob_sha": "dd062af9bafbd6506b3523e8e11ef5e2dd67b8e1",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/index.html",
+      "bytes": 57358,
+      "sha256": "47587b2cacc1142b2aba305118db854c9c1c7b0fbac75c160c602d980328b8ff",
+      "git_blob_sha": "7667dc868240f8322934bd6c0acf60f87b6ce159",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/legal/imprint.html",
+      "bytes": 1707,
+      "sha256": "a4ffec0f31865209bab6b6ef9aa1d9f2f0eab74dcd75d49ec3691d761b720555",
+      "git_blob_sha": "041db0787b4a3f6fd1e6894b9de9ce041ba31d0b",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/legal/privacy.html",
+      "bytes": 3566,
+      "sha256": "c1c4ff940012d7978e631011c10d075fbe012017977dcd985a9dc0860739c6ba",
+      "git_blob_sha": "9696134edfacba57da31b64efe3387647e859c4a",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/legal/terms.html",
+      "bytes": 5361,
+      "sha256": "c7e53647689ceea821e785324e2b6ebe470997bf82c4e4f5266c27f7e843cfc4",
+      "git_blob_sha": "d746c612f3e23c3edf9d7ba2dff2dec79792f49c",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/manage.py",
+      "bytes": 1472,
+      "sha256": "ad92340d3c580e9a50fb7bbf657f9a5b57fe5b909b1f8ac64e66586a1bc50639",
+      "git_blob_sha": "56dcdff66ade71bce09b3e0f0afb625ef539c3a9",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/qa/QA_REPORT.md",
+      "bytes": 2062,
+      "sha256": "1c5ce3e2adf0063fffb99e555463c517f9a2522925667117cdefd86b086de5ee",
+      "git_blob_sha": "6eff26cef5daad06c14ff755a67f6c152530fa8e",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/qa/backend-test-output.txt",
+      "bytes": 1180,
+      "sha256": "696742fd03d47d69349ef0c3e5dad1906106af72ccad242d188efff0a98d0018",
+      "git_blob_sha": "114b53d7f550ddc6b1ff050363dffcac1b9fc562",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/qa/browser-test-output.json",
+      "bytes": 302,
+      "sha256": "ac43a510de09b839081a19209f0995737e4bff01e7ec2821d2f8b7af4cfb4f47",
+      "git_blob_sha": "41ad3cf83826c432169a6e7a565f24e4c19499ac",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/qa/browser_check.py",
+      "bytes": 3199,
+      "sha256": "332e784e24d5675b4e1a9f3d965f8250b8f51dd584a42d8455a67be0ef043238",
+      "git_blob_sha": "48ffc85909b38a2bad0d22428a699f874395ef36",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/qa/desktop-full.png",
+      "bytes": 738799,
+      "sha256": "e3b68587c54123093f2db15e672104009d5139fa9ff9f6b2b794b049cd4f5a90",
+      "git_blob_sha": "cdf3ec10db638d21cda4690847c534f2b980d4d8",
+      "included_in_repository": false
+    },
+    {
+      "path": "landing/qa/desktop-hero.png",
+      "bytes": 142508,
+      "sha256": "22f4c95671cb1551226f46f73e441a9c3fbe3f21b189e14c8299ff5ff80452b6",
+      "git_blob_sha": "4a6f030ddcc064551b6f31ea6cded40e8fd127f6",
+      "included_in_repository": false
+    },
+    {
+      "path": "landing/qa/desktop-overview.png",
+      "bytes": 536463,
+      "sha256": "7522d3a6e11e058bb0e1d992e7105a4ef37d4525a1a747766db289164a9a50ff",
+      "git_blob_sha": "d0e2facdfe2f73bee3f5925de1807b9e3be5c9cd",
+      "included_in_repository": false
+    },
+    {
+      "path": "landing/qa/mobile-full.png",
+      "bytes": 661699,
+      "sha256": "f920f6a36664f8c261e047f4e2674b0d23f647dd21aa832007cff2a1180f7f97",
+      "git_blob_sha": "04c1b13a04be3f3cdeab349cd7df5267f455428e",
+      "included_in_repository": false
+    },
+    {
+      "path": "landing/qa/mobile-hero.png",
+      "bytes": 66962,
+      "sha256": "50517a05883d203f332aa1558bcafd97713ef0bc5b1879ec97ea6fd1f024fcb8",
+      "git_blob_sha": "ff27ca5414e05bf1d695af1758f25ed799b12474",
+      "included_in_repository": false
+    },
+    {
+      "path": "landing/qa/test_backend.py",
+      "bytes": 5830,
+      "sha256": "cc6d5252d2aa5d98123ab383dede7680b4985fdaa58c42c1f7576fcb5a537213",
+      "git_blob_sha": "8b31788472f8aa1c8a04e392189ca30f0c2d4edc",
+      "included_in_repository": true
+    },
+    {
+      "path": "landing/server.py",
+      "bytes": 18501,
+      "sha256": "2e7b7b6de9b6860bba47a43b21d32dc4ff2521a678a0d8449c3d320abeecb532",
+      "git_blob_sha": "1aaca00cf15ace0ec82037fada9128931b03734a",
+      "included_in_repository": true
+    },
+    {
+      "conversation_attachment": "Solo_AI_Berlin.html",
+      "bytes": 57358,
+      "sha256": "47587b2cacc1142b2aba305118db854c9c1c7b0fbac75c160c602d980328b8ff",
+      "included_as": "landing/index.html",
+      "note": "Original attachment; ZIP text entries preserved under landing/, PNG binaries and original ZIP not included in this repository copy."
+    },
+    {
+      "conversation_attachment": "Solo_AI_Berlin_Landing.zip",
+      "bytes": 2091298,
+      "sha256": "e2138cf985354fa84f7200f1bbb692da44ef751a7e511542536512890ccea9b6",
+      "included_as": null,
+      "note": "Original attachment; ZIP text entries preserved under landing/, PNG binaries and original ZIP not included in this repository copy."
+    },
+    {
+      "conversation_attachment": "Solo_AI_Berlin_Preview.png",
+      "bytes": 142508,
+      "sha256": "22f4c95671cb1551226f46f73e441a9c3fbe3f21b189e14c8299ff5ff80452b6",
+      "included_as": null,
+      "note": "Original attachment; ZIP text entries preserved under landing/, PNG binaries and original ZIP not included in this repository copy."
+    },
+    {
+      "conversation_attachment": "Solo_AI_Berlin_Mobile.png",
+      "bytes": 66962,
+      "sha256": "50517a05883d203f332aa1558bcafd97713ef0bc5b1879ec97ea6fd1f024fcb8",
+      "included_as": null,
+      "note": "Original attachment; ZIP text entries preserved under landing/, PNG binaries and original ZIP not included in this repository copy."
+    },
+    {
+      "conversation_attachment": "Solo_AI_Berlin_Launch_Kit_EN.md",
+      "bytes": 14998,
+      "sha256": "f45ce7b59752f9156b20663681a43f3ff1a83bd5edaa8b1c7ffd981f88418a76",
+      "included_as": "archive/launch-kit-v1.md",
+      "note": "Original attachment; ZIP text entries preserved under landing/, PNG binaries and original ZIP not included in this repository copy."
+    }
+  ]
+}

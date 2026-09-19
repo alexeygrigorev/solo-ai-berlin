@@ -1,0 +1,16 @@
+test_application_saved_before_checkout (__main__.BackendTests.test_application_saved_before_checkout) ... ok
+test_bad_and_old_signature_rejected (__main__.BackendTests.test_bad_and_old_signature_rejected) ... ok
+test_closed_and_preview_blocked (__main__.BackendTests.test_closed_and_preview_blocked) ... ok
+test_cross_origin_rejected (__main__.BackendTests.test_cross_origin_rejected) ... ok
+test_delayed_unpaid_event_does_not_unpay (__main__.BackendTests.test_delayed_unpaid_event_does_not_unpay) ... ok
+test_idempotent_retry (__main__.BackendTests.test_idempotent_retry) ... ok
+test_missing_acknowledgement_rejected (__main__.BackendTests.test_missing_acknowledgement_rejected) ... ok
+test_private_files_not_served (__main__.BackendTests.test_private_files_not_served) ... ok
+test_signed_payment_and_duplicate_delivery (__main__.BackendTests.test_signed_payment_and_duplicate_delivery) ... ok
+test_unrelated_link_ignored (__main__.BackendTests.test_unrelated_link_ignored) ... ok
+test_wrong_amount_not_marked_paid (__main__.BackendTests.test_wrong_amount_not_marked_paid) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.011s
+
+OK

@@ -1,0 +1,19 @@
+{
+  "browser": "Chromium",
+  "viewports": [
+    360,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "console_errors": [],
+  "checks": [
+    "required fields",
+    "three-step navigation",
+    "preview does not submit",
+    "back preserves answers",
+    "FAQ accordion",
+    "no horizontal overflow"
+  ]
+}

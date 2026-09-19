@@ -1,0 +1,10 @@
+.env
+private-data/
+*.sqlite3*
+*.jsonl
+__pycache__/
+.venv/
+build/
+.tmp/
+.pytest_cache/
+qa/*.png

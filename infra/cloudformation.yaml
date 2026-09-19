@@ -1,0 +1,227 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Solo + AI Berlin landing and application API on Lambda, served via API Gateway
+  HTTP API at aiberlin.dtcdev.click. DynamoDB holds applications and Stripe
+  webhook records. Stripe Payment Link secrets are optional: the site publishes
+  without them; checkout stays closed until they are set.
+
+Parameters:
+  CodeBucket:
+    Type: String
+  CodeKey:
+    Type: String
+  DomainName:
+    Type: String
+    Default: aiberlin.dtcdev.click
+  HostedZoneId:
+    Type: String
+    Default: Z05963572WVWFHDQZH5NE
+  ContactEmail:
+    Type: String
+    Default: alexey@datatalks.club
+  AppMode:
+    Type: String
+    Default: live
+    AllowedValues: [preview, live]
+  LegalReady:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+  StripeLivemode:
+    Type: String
+    Default: 'false'
+    AllowedValues: ['true', 'false']
+  StripePaymentLink:
+    Type: String
+    Default: ''
+    NoEcho: true
+  StripePaymentLinkId:
+    Type: String
+    Default: ''
+    NoEcho: true
+  StripeWebhookSecret:
+    Type: String
+    Default: ''
+    NoEcho: true
+
+Resources:
+  ApplicationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+        - AttributeName: application_id
+          AttributeType: S
+        - AttributeName: session_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: ApplicationIndex
+          KeySchema:
+            - AttributeName: application_id
+              KeyType: HASH
+            - AttributeName: session_id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: lambda.amazonaws.com }
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: dynamodb
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource:
+                  - !GetAtt ApplicationsTable.Arn
+                  - !Sub "${ApplicationsTable.Arn}/index/*"
+
+  SiteFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: solo-ai-berlin
+      Runtime: python3.12
+      Architectures: [x86_64]
+      Handler: handler.lambda_handler
+      MemorySize: 256
+      Timeout: 15
+      Role: !GetAtt LambdaRole.Arn
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+      Environment:
+        Variables:
+          APP_MODE: !Ref AppMode
+          LEGAL_READY: !Ref LegalReady
+          PUBLIC_ORIGIN: !Sub "https://${DomainName}"
+          CONTACT_EMAIL: !Ref ContactEmail
+          STRIPE_LIVEMODE: !Ref StripeLivemode
+          STRIPE_PAYMENT_LINK: !Ref StripePaymentLink
+          STRIPE_PAYMENT_LINK_ID: !Ref StripePaymentLinkId
+          STRIPE_WEBHOOK_SECRET: !Ref StripeWebhookSecret
+          DYNAMODB_TABLE: !Ref ApplicationsTable
+
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: solo-ai-berlin
+      ProtocolType: HTTP
+
+  Integration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt SiteFunction.Arn
+      PayloadFormatVersion: '2.0'
+
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: $default
+      Target: !Sub "integrations/${Integration}"
+
+  DefaultStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: $default
+      AutoDeploy: true
+
+  InvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref SiteFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*"
+
+  WarmRule:
+    Type: AWS::Events::Rule
+    Properties:
+      ScheduleExpression: rate(5 minutes)
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt SiteFunction.Arn
+          Id: warm
+          Input: '{"warmup": true}'
+
+  WarmPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref SiteFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt WarmRule.Arn
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+
+  ApiDomain:
+    Type: AWS::ApiGatewayV2::DomainName
+    Properties:
+      DomainName: !Ref DomainName
+      DomainNameConfigurations:
+        - CertificateArn: !Ref Certificate
+          EndpointType: REGIONAL
+
+  ApiMapping:
+    Type: AWS::ApiGatewayV2::ApiMapping
+    Properties:
+      ApiId: !Ref HttpApi
+      DomainName: !Ref ApiDomain
+      Stage: !Ref DefaultStage
+
+  AliasRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt ApiDomain.RegionalDomainName
+        HostedZoneId: !GetAtt ApiDomain.RegionalHostedZoneId
+
+Outputs:
+  CustomDomain:
+    Value: !Sub "https://${DomainName}"
+  WebhookUrl:
+    Value: !Sub "https://${DomainName}/api/stripe-webhook"
+  FunctionName:
+    Value: !Ref SiteFunction
+  TableName:
+    Value: !Ref ApplicationsTable
