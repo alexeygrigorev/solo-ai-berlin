@@ -286,7 +286,7 @@ p+p{margin-top:14px}
   .nav .btn{display:none}
   .legal-page .nav-links>a{display:inline-flex;font-size:12px;min-height:44px}
   .btn-small,.nav .btn,.mobile-cta .btn,.form-actions .btn{min-height:44px}
-  .hero-bleed{height:46vh;min-height:260px}
+  .hero-bleed{height:34vh;min-height:220px}
   .format-bleed{height:220px}
   .hero{grid-template-columns:1fr;gap:28px;padding:32px 0 24px}
   .hero h1{font-size:clamp(42px,11vw,58px);margin-top:14px}
