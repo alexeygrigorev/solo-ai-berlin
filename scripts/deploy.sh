@@ -17,7 +17,7 @@ rm -rf build/pkg
 mkdir -p build/pkg/legal build/pkg/assets
 cp handler.py server.py store.py manage.py index.html build/pkg/
 cp legal/*.html build/pkg/legal/
-cp assets/* build/pkg/assets/
+cp -a assets/. build/pkg/assets/
 rm -f build/lambda.zip
 python3 -c "import shutil; shutil.make_archive('build/lambda','zip','build/pkg')"
 echo "    package: $(du -h build/lambda.zip | cut -f1)"
