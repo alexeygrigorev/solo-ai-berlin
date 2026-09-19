@@ -85,5 +85,9 @@ class BackendTests(unittest.TestCase):
         css=b''.join(server.application({'REQUEST_METHOD':'GET','PATH_INFO':'/assets/site.css'},lambda s,h:meta.append(s)))
         self.assertTrue(meta[0].startswith('200'))
         self.assertIn(b'--display', css)
+        meta=[]
+        font=b''.join(server.application({'REQUEST_METHOD':'GET','PATH_INFO':'/assets/fonts/figtree-normal-latin.woff2'},lambda s,h:meta.append(s)))
+        self.assertTrue(meta[0].startswith('200'))
+        self.assertGreater(len(font), 1000)
 
 if __name__=='__main__':unittest.main(verbosity=2)

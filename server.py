@@ -48,6 +48,10 @@ STATIC_TYPES = {
     '.txt': 'text/plain; charset=utf-8',
     '.xml': 'application/xml; charset=utf-8',
     '.ico': 'image/x-icon',
+    '.woff2': 'font/woff2',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.webp': 'image/webp',
 }
 MAX_BODY = 48_000
 TEXT_RULES = {
@@ -298,10 +302,11 @@ def application(environ, start_response):
             return respond(start_response, 200, content, 'text/html; charset=utf-8')
         if method == 'GET' and path.startswith('/assets/'):
             relative = path[len('/assets/'):]
-            if Path(relative).name != relative or '..' in relative:
+            if '..' in Path(relative).parts or relative.startswith('/') or not relative:
                 raise ClientError(404, 'Not found.')
             target = (ROOT / 'assets' / relative).resolve()
-            if not str(target).startswith(str((ROOT / 'assets').resolve())) or not target.is_file():
+            assets_root = (ROOT / 'assets').resolve()
+            if not str(target).startswith(str(assets_root) + '/') or not target.is_file():
                 raise ClientError(404, 'Not found.')
             return respond(start_response, 200, target.read_bytes(), STATIC_TYPES.get(target.suffix, 'application/octet-stream'))
         if method == 'GET' and path in {'/robots.txt', '/sitemap.xml'}:
