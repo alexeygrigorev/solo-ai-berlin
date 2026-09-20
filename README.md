@@ -1,4 +1,4 @@
-# Solo + AI Berlin
+# Solo AI Berlin
 
 **Build your business with AI. Not alone.**
 
