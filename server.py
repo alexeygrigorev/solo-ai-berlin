@@ -280,22 +280,27 @@ def respond(start_response, status: int, payload: bytes, content_type: str = 'ap
     return [payload]
 
 
+def with_live_config(html: str, *, keep_robots: bool = False) -> str:
+    if MODE != 'live':
+        return html
+    config = dict(mode='live', applicationEndpoint='/api/applications',
+                  privacyUrl='/legal/privacy', termsUrl='/legal/terms',
+                  imprintUrl='/legal/impressum', contactEmail=CONTACT,
+                  applicationsClose='2026-11-01T23:59:00+01:00')
+    encoded = json.dumps(config).replace('<', '\\u003c')
+    html = re.sub(r'(<script id="site-config" type="application/json">).*?(</script>)',
+                  lambda m: m[1] + encoded + m[2], html, count=1, flags=re.S)
+    if stripe_configured() and not LIVE_PAYMENTS and not keep_robots:
+        html = html.replace("document.getElementById('preview-bar').hidden=true;", "document.getElementById('preview-bar').textContent='TEST CHECKOUT — not a live application. Use test details only.';")
+        html = html.replace("document.getElementById('robots-meta').content='index,follow';", "document.getElementById('robots-meta').content='noindex,nofollow';")
+    return html
+
+
 def application(environ, start_response):
     try:
         method, path = environ.get('REQUEST_METHOD', 'GET'), environ.get('PATH_INFO', '/')
         if method == 'GET' and path in ('/', '/index.html'):
-            html = (ROOT / 'index.html').read_text(encoding='utf-8')
-            if MODE == 'live':
-                config = dict(mode='live', applicationEndpoint='/api/applications',
-                              privacyUrl='/legal/privacy', termsUrl='/legal/terms',
-                              imprintUrl='/legal/impressum', contactEmail=CONTACT,
-                              applicationsClose='2026-11-01T23:59:00+01:00')
-                encoded = json.dumps(config).replace('<', '\\u003c')
-                html = re.sub(r'(<script id="site-config" type="application/json">).*?(</script>)',
-                              lambda m: m[1] + encoded + m[2], html, count=1, flags=re.S)
-                if stripe_configured() and not LIVE_PAYMENTS:
-                    html = html.replace("document.getElementById('preview-bar').hidden=true;", "document.getElementById('preview-bar').textContent='TEST CHECKOUT — not a live application. Use test details only.';")
-                    html = html.replace("document.getElementById('robots-meta').content='index,follow';", "document.getElementById('robots-meta').content='noindex,nofollow';")
+            html = with_live_config((ROOT / 'index.html').read_text(encoding='utf-8'))
             return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')
         if method == 'GET' and path in {'/legal/imprint', '/legal/imprint.html'}:
             start_response('302 Found', [('Location', '/legal/impressum'), ('Cache-Control', 'no-store')])
@@ -304,6 +309,14 @@ def application(environ, start_response):
             name = path.rsplit('/', 1)[1].removesuffix('.html')
             content = (ROOT / 'legal' / f'{name}.html').read_bytes()
             return respond(start_response, 200, content, 'text/html; charset=utf-8')
+        if method == 'GET' and path in {'/options', '/options/'}:
+            return respond(start_response, 200, (ROOT / 'options' / 'index.html').read_bytes(), 'text/html; charset=utf-8')
+        if method == 'GET' and path.startswith('/options/'):
+            slug = path[len('/options/'):].removesuffix('.html').strip('/')
+            if slug not in {'daylight', 'workshop', 'type', 'circle', 'later'}:
+                raise ClientError(404, 'Not found.')
+            html = with_live_config((ROOT / 'options' / f'{slug}.html').read_text(encoding='utf-8'), keep_robots=True)
+            return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')
         if method == 'GET' and path.startswith('/assets/'):
             relative = path[len('/assets/'):]
             if '..' in Path(relative).parts or relative.startswith('/') or not relative:

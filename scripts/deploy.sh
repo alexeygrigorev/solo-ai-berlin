@@ -14,9 +14,10 @@ KEY="lambda/build-$(date +%s).zip"
 
 echo "==> packaging"
 rm -rf build/pkg
-mkdir -p build/pkg/legal build/pkg/assets
+mkdir -p build/pkg/legal build/pkg/assets build/pkg/options
 cp handler.py server.py store.py manage.py index.html build/pkg/
 cp legal/*.html build/pkg/legal/
+cp options/*.html build/pkg/options/
 cp -a assets/. build/pkg/assets/
 rm -f build/lambda.zip
 python3 -c "import shutil; shutil.make_archive('build/lambda','zip','build/pkg')"
