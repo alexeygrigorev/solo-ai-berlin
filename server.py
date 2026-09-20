@@ -309,14 +309,6 @@ def application(environ, start_response):
             name = path.rsplit('/', 1)[1].removesuffix('.html')
             content = (ROOT / 'legal' / f'{name}.html').read_bytes()
             return respond(start_response, 200, content, 'text/html; charset=utf-8')
-        if method == 'GET' and path in {'/options', '/options/'}:
-            return respond(start_response, 200, (ROOT / 'options' / 'index.html').read_bytes(), 'text/html; charset=utf-8')
-        if method == 'GET' and path.startswith('/options/'):
-            slug = path[len('/options/'):].removesuffix('.html').strip('/')
-            if slug not in {'1', '2', '3', '4', '5'}:
-                raise ClientError(404, 'Not found.')
-            html = with_live_config((ROOT / 'options' / f'{slug}.html').read_text(encoding='utf-8'), keep_robots=True)
-            return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')
         if method == 'GET' and path.startswith('/assets/'):
             relative = path[len('/assets/'):]
             if '..' in Path(relative).parts or relative.startswith('/') or not relative:

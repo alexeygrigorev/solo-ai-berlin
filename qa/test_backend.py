@@ -93,9 +93,5 @@ class BackendTests(unittest.TestCase):
         font=b''.join(server.application({'REQUEST_METHOD':'GET','PATH_INFO':'/assets/fonts/figtree-normal-latin.woff2'},lambda s,h:meta.append(s)))
         self.assertTrue(meta[0].startswith('200'))
         self.assertGreater(len(font), 1000)
-        meta=[]
-        chooser=b''.join(server.application({'REQUEST_METHOD':'GET','PATH_INFO':'/options/'},lambda s,h:meta.append(s)))
-        self.assertTrue(meta[0].startswith('200'))
-        self.assertIn(b'Workshop direction', chooser)
 
 if __name__=='__main__':unittest.main(verbosity=2)
