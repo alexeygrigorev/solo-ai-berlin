@@ -93,13 +93,13 @@ def apply(html: str, theme: dict) -> str:
     )
     html = html.replace("/assets/hero.jpg", theme["hero_src"])
     html = html.replace(
-        "A rain-wet Prenzlauer Berg street at dusk, Altbau windows lit gold, bicycles along the fence.",
+        "A sunlit Berlin table with two closed laptops, notebooks, a plant, and four chairs.",
         theme["hero_alt"],
     )
-    html = html.replace("Prenzlauer Berg · Tuesday evenings", theme["hero_cap"])
+    html = html.replace("Bring the actual work", theme["hero_cap"])
     html = html.replace("/assets/table.jpg", theme["ticket_src"])
     html = html.replace(
-        "A round table of notebooks and empty chairs by a rain-wet Berlin window.",
+        "A tidy desk: closed laptop, mug, cable, and a notebook with simple doodles of a plus, a table, and a laptop.",
         theme["ticket_alt"],
     )
     return html
