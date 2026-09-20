@@ -4,10 +4,10 @@
 
 A small, application-based peer group in Berlin for solopreneurs and indie hackers using AI to build independent businesses. Public site: [https://aiberlin.dtcdev.click](https://aiberlin.dtcdev.click).
 
-| Pilot | 10 and 24 November 2026, 18:30–21:00 CET |
+| Pilot | 10 and 24 November 2026, 18:30-21:00 CET |
 | --- | --- |
 | Place | Mitte / Prenzlauer Berg (venue confirmed by 3 November) |
-| Size | 10–12 paying participants, plus the host |
+| Size | 10-12 paying participants, plus the host |
 | Price | €59 + 19% VAT (€70.21 at checkout), one-time, via Stripe |
 | Deadline | Applications and payment by 1 November 2026, 23:59 CET |
 

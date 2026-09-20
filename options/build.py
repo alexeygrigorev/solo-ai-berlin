@@ -26,7 +26,7 @@ THEMES = [
         "hero_alt": "A sunlit Berlin table with two closed laptops, notebooks, a plant, and four chairs.",
         "hero_cap": "Bring the actual work",
         "ticket_src": "/assets/options/w1-table.jpg",
-        "ticket_alt": "Closed laptop, blank notebook, mug, and a coiled cable on pale wood.",
+        "ticket_alt": "A tidy desk: closed laptop, mug, cable, and a notebook sketch of one person at a laptop joining a circle of people.",
         "blurb": "Apartment workroom, plant, four chairs.",
     },
     {
