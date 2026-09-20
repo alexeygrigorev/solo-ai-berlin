@@ -313,7 +313,7 @@ def application(environ, start_response):
             return respond(start_response, 200, (ROOT / 'options' / 'index.html').read_bytes(), 'text/html; charset=utf-8')
         if method == 'GET' and path.startswith('/options/'):
             slug = path[len('/options/'):].removesuffix('.html').strip('/')
-            if slug not in {'daylight', 'workshop', 'type', 'circle', 'later'}:
+            if slug not in {'1', '2', '3', '4', '5'}:
                 raise ClientError(404, 'Not found.')
             html = with_live_config((ROOT / 'options' / f'{slug}.html').read_text(encoding='utf-8'), keep_robots=True)
             return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')

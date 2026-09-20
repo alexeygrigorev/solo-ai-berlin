@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stamp the live landing into five style options. Copy stays the same."""
+"""Stamp the live landing into five cleaner workshop photo variants."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -9,76 +9,76 @@ SRC = (ROOT / "index.html").read_text(encoding="utf-8")
 
 BAR = """<div class="opt-bar"><strong>{label}</strong><nav>
 <a href="/options/">All five</a>
-<a href="/options/daylight">1 Daylight</a>
-<a href="/options/workshop">2 Workshop</a>
-<a href="/options/type">3 Type</a>
-<a href="/options/circle">4 Circle</a>
-<a href="/options/later">5 Later</a>
-<a href="/">Live site</a>
+<a href="/options/1">1 Room</a>
+<a href="/options/2">2 Table for six</a>
+<a href="/options/3">3 Studio desk</a>
+<a href="/options/4">4 Evening</a>
+<a href="/options/5">5 Lived-in</a>
 </nav></div>
 """
 
-HEAD = """<meta name="robots" content="noindex,nofollow" id="robots-meta">
-<link rel="stylesheet" href="/assets/options/themes.css">
-<title>{title}</title>
-"""
-
-CIRCLE = """<div class="circle-graphic"><img src="/assets/options/circle.svg" width="320" height="320" alt="Twelve seats around a table."></div>"""
-SLOT = """<div class="photo-slot">Photographs from the first sessions.<br>November 2026.</div>"""
-
 THEMES = [
     {
-        "slug": "daylight",
-        "class": "opt-page opt-daylight",
-        "label": "Option 1 of 5 — Daylight workroom",
-        "title": "Daylight workroom — Solo + AI Berlin",
-        "hero_src": "/assets/options/daylight-hero.jpg",
-        "hero_alt": "A sunlit Berlin work table with closed laptops, notebooks, and coffee.",
-        "hero_cap": "A room in Berlin · two Tuesdays",
-        "ticket_src": "/assets/options/daylight-table.jpg",
-        "ticket_alt": "Notebook, stickies, and a closed laptop on a daylight table.",
-    },
-    {
-        "slug": "workshop",
-        "class": "opt-page opt-workshop",
-        "label": "Option 2 of 5 — Builder / workshop",
-        "title": "Builder workshop — Solo + AI Berlin",
-        "hero_src": "/assets/options/workshop-hero.jpg",
-        "hero_alt": "A used Berlin work desk: cables, keyboard, whiteboard, coffee rings.",
+        "slug": "1",
+        "label": "Workshop 1 of 5 — Berlin room, daylight",
+        "title": "Workshop 1 — Berlin room — Solo + AI Berlin",
+        "hero_src": "/assets/options/w1-hero.jpg",
+        "hero_alt": "A sunlit Berlin table with two closed laptops, notebooks, a plant, and four chairs.",
         "hero_cap": "Bring the actual work",
-        "ticket_src": "/assets/options/workshop-desk.jpg",
-        "ticket_alt": "Closed laptop, cables, highlighter, and a coffee cup on a desk.",
+        "ticket_src": "/assets/options/w1-table.jpg",
+        "ticket_alt": "Closed laptop, blank notebook, mug, and a coiled cable on pale wood.",
+        "blurb": "Apartment workroom, plant, four chairs.",
     },
     {
-        "slug": "type",
-        "class": "opt-page opt-type",
-        "label": "Option 3 of 5 — Type-first",
-        "title": "Type-first — Solo + AI Berlin",
-        "drop_bleed": True,
-        "drop_ticket_photo": True,
+        "slug": "2",
+        "label": "Workshop 2 of 5 — Table for six",
+        "title": "Workshop 2 — Table for six — Solo + AI Berlin",
+        "hero_src": "/assets/options/w2-hero.jpg",
+        "hero_alt": "A bright meeting table set with closed laptops, notebooks, and water glasses.",
+        "hero_cap": "Bring the actual work",
+        "ticket_src": "/assets/options/w2-table.jpg",
+        "ticket_alt": "Closed laptop, keyboard, notebook and pen on a white desk.",
+        "blurb": "Cleaner, more like a booked room.",
     },
     {
-        "slug": "circle",
-        "class": "opt-page opt-circle",
-        "label": "Option 4 of 5 — Small-circle graphic",
-        "title": "Circle graphic — Solo + AI Berlin",
-        "drop_bleed": True,
-        "ticket_html": CIRCLE,
+        "slug": "3",
+        "label": "Workshop 3 of 5 — Studio desk",
+        "title": "Workshop 3 — Studio desk — Solo + AI Berlin",
+        "hero_src": "/assets/options/w3-hero.jpg",
+        "hero_alt": "A single pale desk with a closed laptop, notebook, keyboard, and a glass of water.",
+        "hero_cap": "Bring the actual work",
+        "ticket_src": "/assets/options/w3-table.jpg",
+        "ticket_alt": "Two notebooks, a closed laptop, and a glass of water on oak.",
+        "blurb": "Quieter, one-desk, lots of wall.",
     },
     {
-        "slug": "later",
-        "class": "opt-page opt-later",
-        "label": "Option 5 of 5 — Documentary, later",
-        "title": "Documentary later — Solo + AI Berlin",
-        "drop_bleed": True,
-        "ticket_html": SLOT,
+        "slug": "4",
+        "label": "Workshop 4 of 5 — Evening lamp",
+        "title": "Workshop 4 — Evening lamp — Solo + AI Berlin",
+        "hero_src": "/assets/options/w4-hero.jpg",
+        "hero_alt": "A tidy evening table under a cone lamp, closed laptop, notebook, and tea.",
+        "hero_cap": "Bring the actual work",
+        "ticket_src": "/assets/options/w4-table.jpg",
+        "ticket_alt": "Round white table with a closed laptop and three notebooks.",
+        "blurb": "After-work light, still tidy.",
+    },
+    {
+        "slug": "5",
+        "label": "Workshop 5 of 5 — Lived-in",
+        "title": "Workshop 5 — Lived-in — Solo + AI Berlin",
+        "hero_src": "/assets/options/w5-hero.jpg",
+        "hero_alt": "A darker wood table with three closed laptops, open notebooks, and a snake plant by the window.",
+        "hero_cap": "Bring the actual work",
+        "ticket_src": "/assets/options/w5-table.jpg",
+        "ticket_alt": "Two notebooks, a closed laptop, and a glass of water on oak.",
+        "blurb": "A bit more used, still not messy.",
     },
 ]
 
 
 def apply(html: str, theme: dict) -> str:
-    html = html.replace('<html lang="en">', f'<html lang="en" class="{theme["class"]}">')
-    html = html.replace("<body>", f"<body class=\"{theme['class']}\">\n" + BAR.format(label=theme["label"]))
+    html = html.replace('<html lang="en">', '<html lang="en" class="opt-page opt-workshop">')
+    html = html.replace("<body>", '<body class="opt-page opt-workshop">\n' + BAR.format(label=theme["label"]))
     html = html.replace(
         '<meta name="robots" content="index,follow" id="robots-meta">',
         '<meta name="robots" content="noindex,nofollow" id="robots-meta">',
@@ -91,38 +91,17 @@ def apply(html: str, theme: dict) -> str:
         '<link rel="canonical" href="https://aiberlin.dtcdev.click/">',
         f'<link rel="canonical" href="https://aiberlin.dtcdev.click/options/{theme["slug"]}">',
     )
-    if theme.get("drop_bleed"):
-        html = html.replace(
-            """<section class="hero-bleed">
-  <img src="/assets/hero.jpg" width="2400" height="1350" alt="A rain-wet Prenzlauer Berg street at dusk, Altbau windows lit gold, bicycles along the fence.">
-  <p class="hero-bleed-caption">Prenzlauer Berg · Tuesday evenings</p>
-</section>
-""",
-            "",
-        )
-    elif "hero_src" in theme:
-        html = html.replace("/assets/hero.jpg", theme["hero_src"])
-        html = html.replace(
-            "A rain-wet Prenzlauer Berg street at dusk, Altbau windows lit gold, bicycles along the fence.",
-            theme["hero_alt"],
-        )
-        html = html.replace("Prenzlauer Berg · Tuesday evenings", theme["hero_cap"])
-    if theme.get("drop_ticket_photo"):
-        html = html.replace(
-            '<div class="ticket-photo"><img src="/assets/table.jpg" width="800" height="533" alt="A round table of notebooks and empty chairs by a rain-wet Berlin window."><span class="motif-note">A circle, not an audience.</span></div>',
-            "",
-        )
-    elif theme.get("ticket_html"):
-        html = html.replace(
-            '<div class="ticket-photo"><img src="/assets/table.jpg" width="800" height="533" alt="A round table of notebooks and empty chairs by a rain-wet Berlin window."><span class="motif-note">A circle, not an audience.</span></div>',
-            theme["ticket_html"],
-        )
-    elif "ticket_src" in theme:
-        html = html.replace("/assets/table.jpg", theme["ticket_src"])
-        html = html.replace(
-            "A round table of notebooks and empty chairs by a rain-wet Berlin window.",
-            theme["ticket_alt"],
-        )
+    html = html.replace("/assets/hero.jpg", theme["hero_src"])
+    html = html.replace(
+        "A rain-wet Prenzlauer Berg street at dusk, Altbau windows lit gold, bicycles along the fence.",
+        theme["hero_alt"],
+    )
+    html = html.replace("Prenzlauer Berg · Tuesday evenings", theme["hero_cap"])
+    html = html.replace("/assets/table.jpg", theme["ticket_src"])
+    html = html.replace(
+        "A round table of notebooks and empty chairs by a rain-wet Berlin window.",
+        theme["ticket_alt"],
+    )
     return html
 
 
