@@ -302,6 +302,8 @@ def application(environ, start_response):
         if method == 'GET' and path in ('/', '/index.html'):
             html = with_live_config((ROOT / 'index.html').read_text(encoding='utf-8'))
             return respond(start_response, 200, html.encode(), 'text/html; charset=utf-8')
+        if method == 'GET' and path in {'/headlines', '/headlines/'}:
+            return respond(start_response, 200, (ROOT / 'headlines.html').read_bytes(), 'text/html; charset=utf-8')
         if method == 'GET' and path in {'/legal/imprint', '/legal/imprint.html'}:
             start_response('302 Found', [('Location', '/legal/impressum'), ('Cache-Control', 'no-store')])
             return [b'']
