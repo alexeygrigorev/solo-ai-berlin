@@ -44,7 +44,7 @@ p+p{margin-top:14px}
 .eyebrow .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--rust);margin-right:9px;vertical-align:1px}
 .section{padding:72px 0;border-top:1px solid var(--line)}
 .section-intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.7fr);gap:24px 40px;align-items:end;margin-bottom:24px}
-.section-intro>p{max-width:34em;color:var(--muted);font-size:16px;line-height:1.65}
+.section-intro p{max-width:34em;color:var(--muted);font-size:16px;line-height:1.65;margin-top:12px}
 .section-intro h2{margin-top:10px}
 .skip{position:absolute;left:20px;top:-60px;background:var(--green);color:white;padding:12px;z-index:100}
 .skip:focus{top:10px}
