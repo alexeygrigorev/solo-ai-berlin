@@ -116,7 +116,7 @@ p+p{margin-top:14px}
 .format-section .wrap{padding-top:40px}
 .format-section .section-intro{grid-template-columns:1fr;max-width:36rem;gap:12px;margin-bottom:28px}
 .format-section .eyebrow{color:var(--lime)}
-.format-section .section-intro>p{color:#d5ddcf}
+.format-section .section-intro p{color:#d5ddcf}
 .format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
 .format-step{border-top:1px solid #3d5a48;padding:24px 28px 8px 0}
 .format-step+.format-step{padding-left:28px;border-left:1px solid #3d5a48}
@@ -154,6 +154,9 @@ p+p{margin-top:14px}
 .host-still{width:72px;height:72px;object-fit:cover;border:1px solid var(--line)}
 .monogram{display:none}
 .host-label strong{display:block;font-size:14px;line-height:1.4}
+.host-label a{text-decoration:underline;text-underline-offset:3px}
+.host-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:18px}
+.host-links a{font-size:14px;color:var(--muted);text-underline-offset:3px}
 .host-label small{display:block;font-size:12px;color:var(--muted)}
 .host-body p{font-size:17px;color:var(--muted);line-height:1.75}
 .host-body blockquote{margin:22px 0 0;padding-left:18px;border-left:2px solid var(--brass);font-family:var(--display);font-style:italic;font-size:26px;color:var(--green);line-height:1.35;font-weight:400}
