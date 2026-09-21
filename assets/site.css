@@ -75,6 +75,10 @@ p+p{margin-top:14px}
 .hero .lead strong{color:var(--ink);font-weight:600}
 .hero-actions{display:flex;gap:20px;align-items:center;margin-top:26px;flex-wrap:wrap}
 .hero-micro{font-size:13px;color:var(--muted);margin-top:14px;max-width:28em;line-height:1.6}
+.what{max-width:38em;padding:12px 0 8px}
+.what h2{font-size:clamp(28px,3vw,36px);margin:0 0 14px}
+.what p{color:var(--muted);font-size:17px;line-height:1.7}
+.what p+p{margin-top:12px}
 
 .ticket{position:relative;background:var(--white);border:1px solid #111;border-radius:0;box-shadow:none;padding:0 0 22px;overflow:hidden}
 .ticket-head{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 12px}
